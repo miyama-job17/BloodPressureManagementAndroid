@@ -7,6 +7,17 @@ GitHub Pages で公開するためだけのもので、アプリのソースは�
 |---|---|
 | `index.html` | ページ本体。1ファイルで完結している |
 
+ページは上のタブで2つに分かれている。
+
+| タブ | 中身 | URL |
+|---|---|---|
+| 紹介 | アプリの説明・画面・仕様 | `.../` |
+| 使い方 | 操作マニュアル（全8章） | `.../#manual` |
+
+章ごとにも直接開ける（`#manual-1` 〜 `#manual-8`）。
+ページを分けずタブで切り替えているのは、`index.html` 1ファイルで
+完結させたままにするため。
+
 ## 公開のしかた
 
 GitHub の［Settings］→［Pages］で次を設定する。
@@ -32,12 +43,18 @@ https://miyama-job17.github.io/BloodPressureManagementAndroid/
 
 ```
 BloodPressureManagementCs（アプリ本体・非公開）
-  tools/site/template.html      ← ここを編集する
+  tools/site/template.html      ← 紹介タブの文面・全体のスタイル
+  tools/manual/content.py       ← 使い方タブの文面（操作マニュアルの原稿）
+  tools/site/icon-128.png       ← 上のバーのロゴと favicon
   tools/site/build_site.py      ← python build_site.py で生成
   html/index.html               ← できたものを、このリポジトリへコピー
 ```
 
-画面写真は WebP にして data URI で埋め込んであるため、
+「使い方」タブは操作マニュアル（PDF）と同じ `content.py` から作っている。
+文面を直したら、PDF（`tools/manual/build_manual.py`）と
+このページの両方を作り直すこと。
+
+画面写真は WebP、アイコンは PNG にして data URI で埋め込んであるため、
 `index.html` 1ファイルだけで表示できる。
 外部から読み込むのは Google Fonts の書体だけ。
 
