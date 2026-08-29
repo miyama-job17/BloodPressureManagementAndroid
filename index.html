@@ -710,7 +710,8 @@ footer {
   overscroll-behavior-x: contain;
 }
 
-.secnav ul {
+.secnav ul,
+.secnav ol {
   width: min(100% - 2.5rem, 68rem);
   margin-inline: auto;
   padding: .55rem 0;
@@ -752,13 +753,9 @@ footer {
 /* 貼り付いた帯の下に見出しが潜らないようにする */
 .sheet[id] { scroll-margin-top: 7rem; }
 
-/* --- 使い方タブの目次 ------------------------------------------------ */
-.toc ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: toc;
-}
+/* --- 使い方タブの目次 ------------------------------------------------
+   見た目は紹介タブの帯と同じ。章番号だけ足す。 */
+.toc ol { counter-reset: toc; }
 
 .toc li { counter-increment: toc; }
 
@@ -767,82 +764,13 @@ footer {
   color: var(--accent);
   font-weight: 700;
   font-family: "Roboto Mono", ui-monospace, monospace;
-  margin-right: .55rem;
+  margin-right: .5rem;
 }
 
-.toc a[aria-current="true"] { color: var(--accent-ink); font-weight: 700; }
+.toc a[aria-current="true"]::before { color: var(--accent-ink); }
 
-/* 狭い画面：上に貼り付く横並びの帯 */
-@media (max-width: 63.99rem) {
-  .toc {
-    position: sticky;
-    top: 3.4rem;
-    z-index: 15;
-    margin: 1.6rem -1.25rem 0;
-    padding: .55rem 1.25rem;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: saturate(1.4) blur(10px);
-    border-block: 1px solid var(--rule);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-  }
-
-  .toc ol { display: flex; flex-wrap: nowrap; gap: .4rem; }
-  .toc li { flex: none; }
-
-  .toc a {
-    white-space: nowrap;
-    padding: .3rem .8rem;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    background: var(--paper-2);
-  }
-
-  .toc a[aria-current="true"] {
-    border-color: var(--accent);
-    background: var(--accent-bg);
-  }
-
-  [id^="manual-"] { scroll-margin-top: 7rem; }
-}
-
-/* 広い画面：左に固定した柱 */
-@media (min-width: 64rem) {
-  .doc__body {
-    display: grid;
-    grid-template-columns: 14rem minmax(0, 1fr);
-    gap: 3.5rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-
-  .toc {
-    position: sticky;
-    top: 5rem;
-    max-height: calc(100vh - 7rem);
-    overflow-y: auto;
-    border-left: 1px solid var(--rule);
-  }
-
-  .toc ol { display: flex; flex-direction: column; gap: .1rem; }
-
-  .toc a {
-    padding: .45rem .9rem;
-    border-left: 2px solid transparent;
-    margin-left: -1px;
-  }
-
-  .toc a[aria-current="true"] { border-left-color: var(--accent); }
-
-  /* 柱と並ぶので、最初の章の上の区切りは要らない */
-  .doc__main .doc__chapter:first-of-type {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-  }
-
-  [id^="manual-"] { scroll-margin-top: 5.5rem; }
-}
+/* 貼り付いた帯の下に章の見出しが潜らないようにする */
+[id^="manual-"] { scroll-margin-top: 7rem; }
 
 .doc__chapter {
   max-width: 44rem;
@@ -1409,6 +1337,7 @@ footer {
      中身は tools/manual/content.py から作る。PDF と同じ原稿。
      ============================================================= -->
 <main id="page-manual" hidden>
+<nav class="secnav toc" aria-label="使い方の目次"><ol><li><a href="#manual-1">はじめに</a></li><li><a href="#manual-2">画面の構成</a></li><li><a href="#manual-3">記録を入力する</a></li><li><a href="#manual-4">記録を見る</a></li><li><a href="#manual-5">PDF と CSV を書き出す</a></li><li><a href="#manual-6">設定</a></li><li><a href="#manual-7">困ったときは</a></li><li><a href="#manual-8">この記録の扱いについて</a></li></ol></nav>
 <section class="sheet" id="manual">
 <div class="wrap doc">
 <div class="doc__head">
@@ -1417,8 +1346,6 @@ footer {
 <p class="doc__lede">画面ごとの使い方をまとめています。同じ内容を A4 の PDF にもしてあります。</p>
 <p class="doc__meta mono">1.1 版　/　アプリ 1.0.0　/　2026/08/29</p>
 </div>
-<div class="doc__body">
-<nav class="toc" aria-label="使い方の目次"><ol><li><a href="#manual-1">はじめに</a></li><li><a href="#manual-2">画面の構成</a></li><li><a href="#manual-3">記録を入力する</a></li><li><a href="#manual-4">記録を見る</a></li><li><a href="#manual-5">PDF と CSV を書き出す</a></li><li><a href="#manual-6">設定</a></li><li><a href="#manual-7">困ったときは</a></li><li><a href="#manual-8">この記録の扱いについて</a></li></ol></nav>
 <div class="doc__main">
 <section class="doc__chapter" id="manual-1">
 <h2><span class="doc__no">1</span>はじめに</h2>
@@ -1517,7 +1444,6 @@ footer {
 </section>
 </div>
 </div>
-</div>
 </section>
 </main>
 
@@ -1604,6 +1530,14 @@ footer {
       if (spy.targets[i].getBoundingClientRect().top <= line) {
         found = spy.targets[i];
       }
+    }
+
+    // いちばん下まで来たら、最後の節を選ぶ。
+    // 最後の節が短いと、これ以上スクロールできず上端が判定の線まで
+    // 上がりきらないため、押しても印が付かないままになる。
+    var doc = document.documentElement;
+    if (window.innerHeight + window.scrollY >= doc.scrollHeight - 4) {
+      found = spy.targets[spy.targets.length - 1];
     }
 
     if (found === spy.current) { return; }
