@@ -6,6 +6,18 @@ GitHub Pages で公開するためだけのもので、アプリのソースは�
 | ファイル | 内容 |
 |---|---|
 | `index.html` | ページ本体。1ファイルで完結している |
+| `privacy.html` | プライバシーポリシー |
+
+`privacy.html` だけページを分けてある。Play Console がポリシーの
+URL での登録を必須にしているため。
+
+```
+https://miyama-job17.github.io/BloodPressureManagementAndroid/privacy.html
+```
+
+このファイルは生成物ではないので、直すときはここを直接編集する。
+アプリの機能を変えて情報の扱いが変わったとき（広告の追加など）は、
+本文と「最終改定」の日付・版数を必ず更新すること。
 
 ページは上のタブで2つに分かれている。
 
