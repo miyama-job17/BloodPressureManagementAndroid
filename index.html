@@ -347,6 +347,96 @@ p { margin: 0; }
   color: var(--ink-3);
 }
 
+/* ---- ダウンロード ------------------------------------------------ */
+
+.dl {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 52rem) {
+  .dl { grid-template-columns: 3fr 2fr; align-items: start; }
+}
+
+.dl__card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dl__name {
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.dl__facts {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--ink-2);
+  font-size: .92rem;
+}
+
+.dl__hash {
+  margin: 0;
+  font-size: .72rem;
+  color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+
+.dl__check {
+  border-left: 3px solid var(--accent);
+  background: var(--paper-2);
+  padding: 1.1rem 1.3rem;
+  font-size: .9rem;
+  color: var(--ink-2);
+}
+
+.dl__check p { margin: .5rem 0 0; }
+
+.dl__h {
+  font-size: var(--step-1);
+  margin: 0 0 1rem;
+}
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 1.3rem 2.9rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -.1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.steps li p {
+  margin: .35rem 0 0;
+  color: var(--ink-2);
+  font-size: .92rem;
+}
+
 /* ---- 3つの信条 --------------------------------------------------- */
 
 .creeds {
@@ -951,6 +1041,7 @@ footer {
 <nav class="secnav" aria-label="紹介の中の移動">
   <ul>
     <li><a href="#top">はじめに</a></li>
+    <li><a href="#download">ダウンロード</a></li>
     <li><a href="#creeds">決めたこと</a></li>
     <li><a href="#category">血圧の区分</a></li>
     <li><a href="#screens">画面</a></li>
@@ -982,14 +1073,15 @@ footer {
       </div>
 
       <div class="actions">
-        <a class="btn" href="#notebook">血圧手帳を見る</a>
+        <a class="btn" href="#download">アプリをダウンロード</a>
+        <a class="btn btn--ghost" href="#notebook">血圧手帳を見る</a>
         <a class="btn btn--ghost" href="#screens">画面を見る</a>
         <a class="btn btn--ghost" href="#manual">使い方を見る</a>
         <a class="btn btn--ghost" href="#specs">仕様を見る</a>
       </div>
 
       <p class="status">
-        現在テスト配布中。Google Play での公開を準備しています。
+        現在テスト配布中。Google Play での公開までは、<a href="#download" style="color:var(--accent)">このページから直接インストール</a>できます。
       </p>
     </div>
 
@@ -1042,9 +1134,121 @@ footer {
 
 
 <!-- =============================================================
+     ダウンロード
+     Google Play で公開するまでの間、APK をこのページから直接配る。
+     APK は download/ に置く。版を上げたらファイル名・大きさ・SHA-256 をそろえて直す。
+     ============================================================= -->
+<section class="sheet sheet--band" id="download">
+  <div class="wrap stack stack--lg">
+
+    <div class="stack stack--sm narrow">
+      <p class="eyebrow">ダウンロード</p>
+      <h2 style="font-size:var(--step-3)">このページから入れられます。</h2>
+      <p>
+        Google Play で公開するまでの間、テスト版をここから直接インストールできます。
+        Android のスマートフォンで、このページを開いて操作してください。
+      </p>
+    </div>
+
+    <div class="dl">
+      <div class="dl__card">
+        <div class="dl__name">血圧手帳　<span class="mono">1.0.0</span></div>
+        <ul class="dl__facts">
+          <li>Android 12 以上</li>
+          <li>約 53 MB（Wi-Fi でのダウンロードをおすすめします）</li>
+          <li>無料</li>
+        </ul>
+        <div class="actions">
+          <a class="btn" href="download/blood-pressure-techo-1.0.0.apk" download="blood-pressure-techo-1.0.0.apk">アプリをダウンロード</a>
+        </div>
+        <p class="dl__hash">
+          SHA-256：<span class="mono">A5DC12399EA0F4D68A71257949549C54A660CE331165A4C7300CD73A84C77180</span>
+        </p>
+      </div>
+
+      <div class="dl__check">
+        <strong>はじめに確認すること</strong>
+        <p>
+          端末の［設定］→［デバイス情報］（機種によっては［端末情報］）で、
+          Android のバージョンが <strong>12 以上</strong>かを確かめてください。
+          11 以下の端末には入りません。
+        </p>
+      </div>
+    </div>
+
+    <div class="narrow" style="max-width:44rem">
+      <h3 class="dl__h">インストールの手順</h3>
+      <ol class="steps">
+        <li>
+          <strong>このページを Chrome で開き、［アプリをダウンロード］を押します。</strong>
+          <p>「有害なファイルの可能性があります」などと出たら、［ダウンロード］を押します。
+          Google Play 以外から入れるアプリには、いつもこの確認が出ます。</p>
+        </li>
+        <li>
+          <strong>ダウンロードが終わったら［開く］を押します。</strong>
+          <p>画面下の表示が消えてしまったときは、通知を下ろして
+          「blood-pressure-techo-1.0.0.apk」を押すか、［ファイル］アプリの「ダウンロード」から開きます。</p>
+        </li>
+        <li>
+          <strong>「不明なアプリのインストール」を許可します。</strong>
+          <p>「セキュリティ上の理由から…」と出たら［設定］を押し、
+          <b>［この提供元のアプリを許可］</b>（機種によっては［このソースを許可］）を ON にして、
+          戻る操作で元の画面に戻ります。この許可は最初の1回だけです。</p>
+        </li>
+        <li>
+          <strong>［インストール］を押します。</strong>
+          <p>Google Play プロテクトの確認が出ることがあります。
+          「アプリをスキャンしますか」なら［スキャンせずにインストール］、
+          「安全でない可能性のあるアプリ」なら［詳細］を開いて［インストールする］を押します。
+          Google Play で公開していないアプリのために出る表示です。</p>
+        </li>
+        <li>
+          <strong>「アプリをインストールしました」と出たら［開く］を押します。</strong>
+          <p>ホーム画面かアプリの一覧に「血圧手帳」が増えています。
+          測定リマインダーを使うときは、通知を許可してください。</p>
+        </li>
+        <li>
+          <strong>後片付けをします（おすすめ）。</strong>
+          <p>［設定］→［アプリ］→［Chrome］の「不明なアプリのインストール」を OFF に戻します。
+          ダウンロードした APK ファイルは、インストールが終われば消してかまいません。</p>
+        </li>
+      </ol>
+
+      <details>
+        <summary>新しい版が出たときは。</summary>
+        <p>
+          同じ手順でダウンロードしてインストールすると、上書きで更新されます。
+          入力した記録はそのまま残ります。アプリを<strong>削除</strong>してから入れ直すと記録が消えるので、
+          削除はしないでください。
+        </p>
+      </details>
+
+      <details>
+        <summary>Google Play で公開されたら。</summary>
+        <p>
+          このページから入れた版と Google Play の版は、そのままでは入れ替えられない場合があります。
+          そのときは、先に設定タブから CSV を2種類書き出して保存し、
+          このアプリを削除してから Google Play の版を入れ、CSV を読み込んでください。
+        </p>
+      </details>
+
+      <details>
+        <summary>［インストール］が押せない、「アプリはインストールされていません」と出る。</summary>
+        <p>
+          Android のバージョンが 12 以上か、空き容量が 200 MB 以上あるかを確認してください。
+          ダウンロードが途中で切れていることもあるので、APK を消してもう一度ダウンロードしてみてください。
+        </p>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =============================================================
      3つの信条
      ============================================================= -->
-<section class="sheet sheet--band" id="creeds">
+<section class="sheet" id="creeds">
   <div class="wrap stack stack--lg">
 
     <div class="stack stack--sm narrow">
@@ -1562,6 +1766,7 @@ footer {
     <span>血圧手帳　1.0.0</span>
     <span class="mono">com.job17.bloodpressure</span>
     <span>Android 12 以上／無料</span>
+    <a href="#download" style="color:var(--accent);text-decoration:none">ダウンロード</a>
     <a href="#manual" style="color:var(--accent);text-decoration:none">使い方を見る</a>
     <!-- 別ファイル。Play Console に URL を登録する必要があるため、
          1ファイル完結の例外としてページを分けている -->
